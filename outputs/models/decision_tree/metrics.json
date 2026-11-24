@@ -1,0 +1,89 @@
+{
+  "accuracy": 0.8246,
+  "roc_auc": 0.8432,
+  "pr_auc": 0.6868,
+  "attack_class_1": {
+    "precision": 0.7102,
+    "recall": 0.9267,
+    "f1_score": 0.8041,
+    "support": 21739
+  },
+  "normal_class_0": {
+    "precision": 0.9422,
+    "recall": 0.7597,
+    "f1_score": 0.8412,
+    "support": 34206
+  },
+  "summary": {
+    "macro_f1": 0.8227,
+    "weighted_f1": 0.8268,
+    "specificity": 0.7597,
+    "false_positive_rate": 0.2403,
+    "train_accuracy": 0.9979,
+    "tree_depth": 42,
+    "leaf_nodes": 5616
+  },
+  "confusion_matrix": {
+    "true_negatives": 25987,
+    "false_positives": 8219,
+    "false_negatives": 1594,
+    "true_positives": 20145,
+    "total_test_samples": 55945
+  },
+  "timing": {
+    "fit_duration_sec": 1.4732,
+    "eval_duration_sec": 0.0114
+  },
+  "classification_report": {
+    "0": {
+      "precision": 0.9422065914941445,
+      "recall": 0.7597205168683857,
+      "f1-score": 0.841180183533753,
+      "support": 34206.0
+    },
+    "1": {
+      "precision": 0.7102312790861656,
+      "recall": 0.9266755600533603,
+      "f1-score": 0.8041434644632058,
+      "support": 21739.0
+    },
+    "accuracy": 0.824595584949504,
+    "macro avg": {
+      "precision": 0.826218935290155,
+      "recall": 0.843198038460873,
+      "f1-score": 0.8226618239984794,
+      "support": 55945.0
+    },
+    "weighted avg": {
+      "precision": 0.8520660728340845,
+      "recall": 0.824595584949504,
+      "f1-score": 0.8267885268017015,
+      "support": 55945.0
+    }
+  },
+  "ttl_ablation_comparison": {
+    "features_count": 193,
+    "accuracy": 0.8238,
+    "attack_recall": 0.9258,
+    "attack_precision": 0.7094,
+    "attack_f1": 0.8033,
+    "roc_auc": 0.8424,
+    "pr_auc": 0.6858
+  },
+  "logistic_regression_reference": {
+    "accuracy": 0.7441,
+    "attack_precision": 0.6084,
+    "attack_recall": 0.9575,
+    "attack_f1": 0.7441,
+    "roc_auc": 0.9192,
+    "pr_auc": 0.8914
+  },
+  "model_hyperparameters": {
+    "criterion": "gini",
+    "splitter": "best",
+    "max_depth": null,
+    "min_samples_split": 2,
+    "min_samples_leaf": 1,
+    "random_state": 42
+  }
+}

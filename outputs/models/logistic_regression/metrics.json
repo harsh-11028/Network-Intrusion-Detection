@@ -1,0 +1,77 @@
+{
+  "accuracy": 0.7441,
+  "roc_auc": 0.9192,
+  "pr_auc": 0.8914,
+  "attack_class_1": {
+    "precision": 0.6084,
+    "recall": 0.9575,
+    "f1_score": 0.7441,
+    "support": 21739
+  },
+  "normal_class_0": {
+    "precision": 0.9575,
+    "recall": 0.6084,
+    "f1_score": 0.744,
+    "support": 34206
+  },
+  "summary": {
+    "macro_f1": 0.7441,
+    "weighted_f1": 0.744,
+    "specificity": 0.6084,
+    "false_positive_rate": 0.3916
+  },
+  "confusion_matrix": {
+    "true_negatives": 20810,
+    "false_positives": 13396,
+    "false_negatives": 923,
+    "true_positives": 20816,
+    "total_test_samples": 55945
+  },
+  "timing": {
+    "eval_duration_sec": 0.033
+  },
+  "classification_report": {
+    "0": {
+      "precision": 0.9575300234666176,
+      "recall": 0.6083728000935509,
+      "f1-score": 0.7440247412359892,
+      "support": 34206.0
+    },
+    "1": {
+      "precision": 0.6084414825207529,
+      "recall": 0.9575417452504715,
+      "f1-score": 0.7440796411145466,
+      "support": 21739.0
+    },
+    "accuracy": 0.7440521941192242,
+    "macro avg": {
+      "precision": 0.7829857529936852,
+      "recall": 0.7829572726720112,
+      "f1-score": 0.7440521911752679,
+      "support": 55945.0
+    },
+    "weighted avg": {
+      "precision": 0.8218818727539149,
+      "recall": 0.7440521941192242,
+      "f1-score": 0.7440460741247185,
+      "support": 55945.0
+    }
+  },
+  "ttl_ablation_comparison": {
+    "features_count": 193,
+    "accuracy": 0.7513,
+    "attack_recall": 0.9794,
+    "attack_precision": 0.6125,
+    "attack_f1": 0.7537,
+    "roc_auc": 0.9134,
+    "pr_auc": 0.8769
+  },
+  "model_hyperparameters": {
+    "penalty": "deprecated",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 1000,
+    "actual_iterations": 228,
+    "random_state": 42
+  }
+}

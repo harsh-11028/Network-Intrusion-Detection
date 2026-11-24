@@ -1,0 +1,21 @@
+model_key,model_name,strategy,selected_threshold,val_accuracy,val_attack_recall,val_attack_precision,val_attack_f1,val_fpr,val_false_positives,val_false_negatives,feasibility_note
+logistic_regression,Logistic Regression,Default (0.50),0.5,0.9029,0.9765,0.8563,0.9125,0.1763,1830.0,263.0,Standard reference
+logistic_regression,Logistic Regression,Strategy A (Max Attack F1),0.13,0.9064,0.9979,0.8483,0.9171,0.192,1993.0,23.0,Max validation Attack F1 (0.9171)
+logistic_regression,Logistic Regression,Strategy B (Max Macro F1),0.13,0.9064,0.9979,0.8483,0.9171,0.192,1993.0,23.0,Max validation Macro F1 (0.9049)
+logistic_regression,Logistic Regression,Strategy C (Security >= 97%),0.53,0.9025,0.9715,0.8589,0.9117,0.1718,1783.0,318.0,Feasible (Recall >= 97%)
+logistic_regression,Logistic Regression,Strategy D (Operational Target),0.13,0.9064,0.9979,0.8483,0.9171,0.192,1993.0,23.0,"Feasible (Th=0.13, Rec=99.79%, FPR=19.20%)"
+decision_tree,Decision Tree,Default (0.50),0.5,0.9162,0.9136,0.9239,0.9187,0.081,841.0,965.0,Standard reference
+decision_tree,Decision Tree,Strategy A (Max Attack F1),0.5,0.9162,0.9136,0.9239,0.9187,0.081,841.0,965.0,Max validation Attack F1 (0.9187)
+decision_tree,Decision Tree,Strategy B (Max Macro F1),0.5,0.9162,0.9136,0.9239,0.9187,0.081,841.0,965.0,Max validation Macro F1 (0.9161)
+decision_tree,Decision Tree,Strategy C (Security >= 97%),0.05,0.9162,0.9136,0.9239,0.9187,0.081,841.0,965.0,Infeasible (Max Recall=91.36%)
+decision_tree,Decision Tree,Strategy D (Operational Target),,,,,,,,,Infeasible (No threshold satisfies Recall >= 95% AND FPR <= 20%)
+random_forest,Random Forest,Default (0.50),0.5,0.9324,0.9525,0.92,0.936,0.0891,925.0,531.0,Standard reference
+random_forest,Random Forest,Strategy A (Max Attack F1),0.5,0.9324,0.9525,0.92,0.936,0.0891,925.0,531.0,Max validation Attack F1 (0.9360)
+random_forest,Random Forest,Strategy B (Max Macro F1),0.53,0.933,0.944,0.9281,0.936,0.0787,817.0,626.0,Max validation Macro F1 (0.9329)
+random_forest,Random Forest,Strategy C (Security >= 97%),0.42,0.9291,0.9709,0.9002,0.9342,0.1158,1202.0,325.0,Feasible (Recall >= 97%)
+random_forest,Random Forest,Strategy D (Operational Target),0.5,0.9324,0.9525,0.92,0.936,0.0891,925.0,531.0,"Feasible (Th=0.50, Rec=95.25%, FPR=8.91%)"
+xgboost,XGBoost,Default (0.50),0.5,0.9379,0.9538,0.9283,0.9409,0.0793,823.0,516.0,Standard reference
+xgboost,XGBoost,Strategy A (Max Attack F1),0.49,0.938,0.956,0.9268,0.9412,0.0813,844.0,491.0,Max validation Attack F1 (0.9412)
+xgboost,XGBoost,Strategy B (Max Macro F1),0.49,0.938,0.956,0.9268,0.9412,0.0813,844.0,491.0,Max validation Macro F1 (0.9379)
+xgboost,XGBoost,Strategy C (Security >= 97%),0.42,0.9356,0.9702,0.9113,0.9398,0.1017,1055.0,333.0,Feasible (Recall >= 97%)
+xgboost,XGBoost,Strategy D (Operational Target),0.49,0.938,0.956,0.9268,0.9412,0.0813,844.0,491.0,"Feasible (Th=0.49, Rec=95.60%, FPR=8.13%)"

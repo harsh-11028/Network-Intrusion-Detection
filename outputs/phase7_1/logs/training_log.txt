@@ -1,0 +1,111 @@
+PHASE 7.1 EXECUTION LOG
+============================================================
+===========================================================================
+ PHASE 7.1: LEAKAGE-FREE VALIDATION, THRESHOLD SELECTION & FINAL EVALUATION
+===========================================================================
+
+[DATA AUDIT] Verifying dataset files and immutability sha256...
+  -> Train CSV: data/UNSW_NB15_training_cleaned.csv (SHA-256: a82f16c0d1788560dfe5a927782e06ceffd4d2b54daa7821013aa8ac72d93d04)
+  -> Test  CSV: data/UNSW_NB15_testing_cleaned.csv (SHA-256: 8ed1055914edd482b581a3782dfd04f08be45bc9b472931d0889d4358622ce66)
+  -> Raw Train shape: (107740, 44)
+  -> Raw Test  shape: (55945, 44)
+  -> Separated features: 42 input columns (39 num, 3 cat)
+  -> Target distribution in Train: Normal=51,890, Attack=55,850
+  -> Target distribution in Test : Normal=34,206, Attack=21,739
+
+[SPLIT] Creating stratified 80/20 train/val split on RAW features BEFORE preprocessing...
+  -> Internal Train subset : (86192, 42) (Attack: 44,680, Normal: 41,512)
+  -> Validation subset     : (21548, 42) (Attack: 11,170, Normal: 10,378)
+
+[PREPROCESSING] Fitting ColumnTransformer exclusively on internal training subset...
+  -> Transformed internal train shape: (86192, 192) (192 features)
+  -> Transformed validation shape    : (21548, 192) (192 features)
+  -> Note: Validation features = 192 (vs 194 in full set, proving unseen 'proto=rtp' and 'state=URN' are properly handled without leakage)
+
+[TRAIN VAL] Retraining 4 baseline models on internal training subset (86,192 rows, 192 features)...
+  -> Fitting Logistic Regression on internal training subset...
+     Fitted in 2.23s | Validation prob range: [0.0000, 1.0000]
+  -> Fitting Decision Tree on internal training subset...
+     Fitted in 1.19s | Validation prob range: [0.0000, 1.0000]
+  -> Fitting Random Forest on internal training subset...
+     Fitted in 6.01s | Validation prob range: [0.0000, 1.0000]
+  -> Fitting XGBoost on internal training subset...
+     Fitted in 2.00s | Validation prob range: [0.0000, 1.0000]
+
+[SWEEP] Evaluating thresholds 0.05 to 0.95 (step 0.01) on leakage-free validation set...
+  -> Saved logistic_regression_thresholds.csv
+  -> Saved decision_tree_thresholds.csv
+  -> Saved random_forest_thresholds.csv
+  -> Saved xgboost_thresholds.csv
+  -> Saved outputs/phase7_1/validation/threshold_analysis.csv
+
+[STRATEGY] Selecting operating thresholds under Strategies A, B, C, D...
+  -> Logistic Regression:
+     Strategy A (Max Attack F1) : Th=0.13 | Val F1=0.9171 | Rec=99.79% | FPR=19.20%
+     Strategy B (Max Macro F1)  : Th=0.13 | Val Macro F1=0.9049
+     Strategy C (Security 97%)  : Th=0.53 | Feasible (Recall >= 97%)
+     Strategy D (Operational)   : Feasible (Th=0.13, Rec=99.79%, FPR=19.20%)
+  -> Decision Tree:
+     Strategy A (Max Attack F1) : Th=0.50 | Val F1=0.9187 | Rec=91.36% | FPR=8.10%
+     Strategy B (Max Macro F1)  : Th=0.50 | Val Macro F1=0.9161
+     Strategy C (Security 97%)  : Th=0.05 | Infeasible (Max Recall=91.36%)
+     Strategy D (Operational)   : Infeasible (No threshold satisfies Recall >= 95% AND FPR <= 20%)
+  -> Random Forest:
+     Strategy A (Max Attack F1) : Th=0.50 | Val F1=0.9360 | Rec=95.25% | FPR=8.91%
+     Strategy B (Max Macro F1)  : Th=0.53 | Val Macro F1=0.9329
+     Strategy C (Security 97%)  : Th=0.42 | Feasible (Recall >= 97%)
+     Strategy D (Operational)   : Feasible (Th=0.50, Rec=95.25%, FPR=8.91%)
+  -> XGBoost:
+     Strategy A (Max Attack F1) : Th=0.49 | Val F1=0.9412 | Rec=95.60% | FPR=8.13%
+     Strategy B (Max Macro F1)  : Th=0.49 | Val Macro F1=0.9379
+     Strategy C (Security 97%)  : Th=0.42 | Feasible (Recall >= 97%)
+     Strategy D (Operational)   : Feasible (Th=0.49, Rec=95.60%, FPR=8.13%)
+  -> Saved outputs/phase7_1/validation/threshold_selection_summary.csv
+
+[PLOTS] Generating 9 validation threshold plots in outputs/phase7_1/validation...
+
+[TTL ABLATION] Running independent validation feature ablation...
+  -> Fitting independent validation pipeline for TTL ablation...
+     Without 'sttl' (191 features): Acc=0.9386, F1=0.9415
+     Without 'sttl' & 'ct_state_ttl' (190 features): Acc=0.9374, F1=0.9404
+
+[FINAL PREPROCESSING] Fitting fresh preprocessor on 100% of official training set (107,740 rows)...
+  -> Full transformed train shape: (107740, 194) (194 features)
+  -> Transformed official test shape: (55945, 194) (194 features)
+
+[RETRAIN FINAL] Training final models on complete transformed training set...
+  -> Retraining final Logistic Regression...
+     Fitted in 2.88s
+  -> Retraining final Decision Tree...
+     Fitted in 1.47s
+  -> Retraining final Random Forest...
+     Fitted in 7.79s
+  -> Retraining final XGBoost...
+     Fitted in 2.31s
+
+[OFFICIAL TEST EVAL] Evaluating final models on untouched official test set...
+  -> Logistic Regression [Default (0.50) @ Th=0.50]: Acc=74.45%, Rec=95.81%, Prec=60.88%, F1=0.7445, FP=13,385, FN=910
+  -> Logistic Regression [Strategy A (Max Val Attack F1) @ Th=0.13]: Acc=74.67%, Rec=99.85%, Prec=60.56%, F1=0.7539, FP=14,139, FN=33
+  -> Logistic Regression [Strategy B (Max Val Macro F1) @ Th=0.13]: Acc=74.67%, Rec=99.85%, Prec=60.56%, F1=0.7539, FP=14,139, FN=33
+  -> Logistic Regression [Strategy C (Security-Oriented) @ Th=0.53]: Acc=74.62%, Rec=95.12%, Prec=61.14%, F1=0.7444, FP=13,141, FN=1,060
+  -> Logistic Regression [Strategy D (Operational Target) @ Th=0.13]: Acc=74.67%, Rec=99.85%, Prec=60.56%, F1=0.7539, FP=14,139, FN=33
+  -> Decision Tree [Default (0.50) @ Th=0.50]: Acc=82.21%, Rec=92.72%, Prec=70.66%, F1=0.8020, FP=8,369, FN=1,582
+  -> Decision Tree [Strategy A (Max Val Attack F1) @ Th=0.50]: Acc=82.21%, Rec=92.72%, Prec=70.66%, F1=0.8020, FP=8,369, FN=1,582
+  -> Decision Tree [Strategy B (Max Val Macro F1) @ Th=0.50]: Acc=82.21%, Rec=92.72%, Prec=70.66%, F1=0.8020, FP=8,369, FN=1,582
+  -> Decision Tree [Strategy C (Security-Oriented) @ Th=0.05]: Acc=82.21%, Rec=92.72%, Prec=70.66%, F1=0.8020, FP=8,369, FN=1,582
+  -> Random Forest [Default (0.50) @ Th=0.50]: Acc=82.73%, Rec=97.51%, Prec=69.92%, F1=0.8144, FP=9,121, FN=542
+  -> Random Forest [Strategy A (Max Val Attack F1) @ Th=0.50]: Acc=82.73%, Rec=97.51%, Prec=69.92%, F1=0.8144, FP=9,121, FN=542
+  -> Random Forest [Strategy B (Max Val Macro F1) @ Th=0.53]: Acc=83.85%, Rec=96.82%, Prec=71.61%, F1=0.8233, FP=8,343, FN=691
+  -> Random Forest [Strategy C (Security-Oriented) @ Th=0.42]: Acc=80.01%, Rec=98.81%, Prec=66.28%, F1=0.7934, FP=10,927, FN=258
+  -> Random Forest [Strategy D (Operational Target) @ Th=0.50]: Acc=82.73%, Rec=97.51%, Prec=69.92%, F1=0.8144, FP=9,121, FN=542
+  -> XGBoost [Default (0.50) @ Th=0.50]: Acc=83.53%, Rec=97.33%, Prec=71.02%, F1=0.8212, FP=8,632, FN=581
+  -> XGBoost [Strategy A (Max Val Attack F1) @ Th=0.49]: Acc=83.23%, Rec=97.48%, Prec=70.57%, F1=0.8187, FP=8,836, FN=547
+  -> XGBoost [Strategy B (Max Val Macro F1) @ Th=0.49]: Acc=83.23%, Rec=97.48%, Prec=70.57%, F1=0.8187, FP=8,836, FN=547
+  -> XGBoost [Strategy C (Security-Oriented) @ Th=0.42]: Acc=81.22%, Rec=98.35%, Prec=67.81%, F1=0.8027, FP=10,148, FN=359
+  -> XGBoost [Strategy D (Operational Target) @ Th=0.49]: Acc=83.23%, Rec=97.48%, Prec=70.57%, F1=0.8187, FP=8,836, FN=547
+
+[PLOTS] Generating 7 final test evaluation plots in outputs/phase7_1/final_test...
+
+===========================================================================
+ PHASE 7.1 PIPELINE EXECUTION COMPLETED SUCCESSFULLY
+===========================================================================

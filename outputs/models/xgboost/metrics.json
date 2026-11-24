@@ -1,0 +1,146 @@
+{
+  "accuracy": 0.8353,
+  "roc_auc": 0.9719,
+  "pr_auc": 0.9624,
+  "attack_class_1": {
+    "precision": 0.7102,
+    "recall": 0.9733,
+    "f1_score": 0.8212,
+    "support": 21739
+  },
+  "normal_class_0": {
+    "precision": 0.9778,
+    "recall": 0.7476,
+    "f1_score": 0.8474,
+    "support": 34206
+  },
+  "summary": {
+    "macro_precision": 0.844,
+    "macro_recall": 0.8605,
+    "macro_f1": 0.8343,
+    "weighted_f1": 0.8372,
+    "specificity": 0.7476,
+    "false_positive_rate": 0.2524,
+    "train_accuracy": 0.9556,
+    "generalization_gap": 0.1203,
+    "n_estimators": 300,
+    "max_depth": 6,
+    "learning_rate": 0.1
+  },
+  "confusion_matrix": {
+    "true_negatives": 25574,
+    "false_positives": 8632,
+    "false_negatives": 581,
+    "true_positives": 21158,
+    "total_test_samples": 55945
+  },
+  "timing": {
+    "fit_duration_sec": 2.3046,
+    "eval_duration_sec": 0.0709
+  },
+  "classification_report": {
+    "0": {
+      "precision": 0.9777862741349647,
+      "recall": 0.7476466117055487,
+      "f1-score": 0.8473683338579546,
+      "support": 34206.0
+    },
+    "1": {
+      "precision": 0.7102383350117489,
+      "recall": 0.9732738396430378,
+      "f1-score": 0.8212074754022007,
+      "support": 21739.0
+    },
+    "accuracy": 0.8353204039681831,
+    "macro avg": {
+      "precision": 0.8440123045733567,
+      "recall": 0.8604602256742933,
+      "f1-score": 0.8342879046300777,
+      "support": 55945.0
+    },
+    "weighted avg": {
+      "precision": 0.87382301292128,
+      "recall": 0.8353204039681831,
+      "f1-score": 0.8372027980286645,
+      "support": 55945.0
+    }
+  },
+  "ttl_ablation_comparison": {
+    "features_count": 193,
+    "accuracy": 0.8356,
+    "attack_recall": 0.9716,
+    "attack_precision": 0.7111,
+    "attack_f1": 0.8212,
+    "roc_auc": 0.9712,
+    "pr_auc": 0.9615,
+    "fit_duration_sec": 2.27
+  },
+  "overlap_investigation": {
+    "total_test_records": 55945,
+    "overlapping_records_count": 2030,
+    "overlapping_records_pct": 3.63,
+    "novel_test_records_count": 53915,
+    "novel_test_records_pct": 96.37,
+    "novel_metrics": {
+      "accuracy": 0.8343,
+      "attack_precision": 0.7017,
+      "attack_recall": 0.9718,
+      "attack_f1": 0.815,
+      "roc_auc": 0.9704,
+      "pr_auc": 0.9582
+    }
+  },
+  "four_model_comparison": {
+    "logistic_regression": {
+      "accuracy": 0.7441,
+      "attack_precision": 0.6084,
+      "attack_recall": 0.9575,
+      "attack_f1": 0.7441,
+      "roc_auc": 0.9192,
+      "pr_auc": 0.8914,
+      "false_positives": 13396,
+      "false_negatives": 923
+    },
+    "decision_tree": {
+      "accuracy": 0.8246,
+      "attack_precision": 0.7102,
+      "attack_recall": 0.9267,
+      "attack_f1": 0.8041,
+      "roc_auc": 0.8432,
+      "pr_auc": 0.6868,
+      "false_positives": 8219,
+      "false_negatives": 1594
+    },
+    "random_forest": {
+      "accuracy": 0.8284,
+      "attack_precision": 0.7008,
+      "attack_recall": 0.9745,
+      "attack_f1": 0.8153,
+      "roc_auc": 0.9655,
+      "pr_auc": 0.9502,
+      "false_positives": 9043,
+      "false_negatives": 555
+    },
+    "xgboost": {
+      "accuracy": 0.8353,
+      "attack_precision": 0.7102,
+      "attack_recall": 0.9733,
+      "attack_f1": 0.8212,
+      "roc_auc": 0.9719,
+      "pr_auc": 0.9624,
+      "false_positives": 8632,
+      "false_negatives": 581
+    }
+  },
+  "model_hyperparameters": {
+    "xgboost_version": "3.4.1",
+    "n_estimators": 300,
+    "max_depth": 6,
+    "learning_rate": 0.1,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "random_state": 42
+  }
+}
